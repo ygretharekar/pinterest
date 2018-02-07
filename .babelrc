@@ -1,0 +1,8 @@
+{
+	"presets": [
+		"node8",
+		"es2016",
+		"react"
+	],
+	"sourceMaps": true
+}
