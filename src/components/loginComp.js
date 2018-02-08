@@ -6,9 +6,11 @@ import SwipeableViews from 'react-swipeable-views';
 import AppBar from 'material-ui/AppBar';
 import Tabs, {Tab} from 'material-ui/Tabs';
 import Typography from 'material-ui/Typography';
-import Zoom from 'material-ui/transitions/Zoom';
 import Button from 'material-ui/Button';
-import green from 'material-ui/colors/green';
+import ArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
+import TextField from 'material-ui/TextField';
+
+import { Link } from 'react-router-dom';
 
 function TabContainer({ children, dir }) {
   return (
@@ -25,13 +27,17 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
-	width: '50%',
+  backgroundColor: theme.palette.background.paper,
+	width: '35%',
 	position: 'absolute',
 	top: '50%',
 	left: '50%',
-	margin: '-20% 0 0 -25%'
+	margin: '-20% 0 0 -20%'
   },
+
+  button: {
+    margin: theme.spacing.unit,
+  }
 });
 
 class FullWidthTabs extends React.Component {
@@ -60,10 +66,8 @@ class FullWidthTabs extends React.Component {
             textColor="primary"
             fullWidth
           >
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
-
+            <Tab label="Login" />
+            <Tab label="Signup" />  
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -71,11 +75,32 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>Item One</TabContainer>
-          <TabContainer dir={theme.direction}>Item Two</TabContainer>
-          <TabContainer dir={theme.direction}>Item Three</TabContainer>
+          <TabContainer dir={theme.direction}>
+            <TextField
+              id="name"
+              label="Username"
+              className={classes.textField}
+              value={this.state.name}
+              margin="normal"
+              style={{width:'100%'}}
+            />
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+            Item Two
+          </TabContainer>          
         </SwipeableViews>
-      </div>
+        <Button 
+          variant="fab" 
+          color="primary" 
+          aria-label="Arrow Left" 
+          component={ Link }
+          to='/'
+          style={{ marginLeft:"80%" }}
+        >
+          <ArrowLeft />
+        </Button>
+
+      </div> 
     );
   }
 }
@@ -84,6 +109,5 @@ FullWidthTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
-
 
 export default withStyles(styles, { withTheme: true })(FullWidthTabs);

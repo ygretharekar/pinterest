@@ -8,8 +8,6 @@ import Button from 'material-ui/Button';
 
 import { Link } from 'react-router-dom';
 
-
-
 const styles = {
   root: {
     width: '100%'
@@ -34,18 +32,18 @@ function SimpleAppBar(props) {
             Pinterest Clone
           </Typography>
 		      <Button
-            component={ Link }
-            to='/login'  
             color="inherit"
+            href="/login"
           >
-            Login
-            
+            Twitter
           </Button>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
+
 
 SimpleAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
