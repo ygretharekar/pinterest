@@ -1,10 +1,12 @@
 import express from 'express';
 import path from 'path';
+import passport from 'passport';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import fallback from 'express-history-api-fallback';
-import passport from 'passport';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 export default app => {
 	app.use(express.static("build"));
@@ -21,4 +23,5 @@ export default app => {
 
 	app.use(passport.initialize());
 	app.use(passport.session());
+	app.use(fallback(__dirname + '../build/index.html'));	
 };

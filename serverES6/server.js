@@ -1,11 +1,7 @@
 import express from "express";
-import appConfig from "./config/middleware";
+import appConfig from "./config/middlewares";
 
 const app = express();
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
 
 appConfig(app);
 
