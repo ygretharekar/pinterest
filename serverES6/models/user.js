@@ -6,18 +6,18 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 const UserSchema = new Schema({
-  username: String,
-  twitterId: String,
-  twitterScreenName: String,
-  twitterProfileImg: String,
-  pins: [{
-    type: Schema.Types.ObjectId,
-    ref: 'pin',
-  }],
-  createdOn: {
-    type: Date,
-    default: Date.now()
-  }
+	username: String,
+	twitterId: String,
+	twitterScreenName: String,
+	twitterProfileImg: String,
+	pins: [{
+		type: Schema.Types.ObjectId,
+		ref: 'pin',
+	}],
+	createdOn: {
+		type: Date,
+		default: Date.now()
+	}
 });
 
 UserSchema.plugin(findOrCreate);

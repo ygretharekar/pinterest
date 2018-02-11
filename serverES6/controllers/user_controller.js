@@ -1,42 +1,47 @@
-import  passport from 'passport';
-import { Strategy as TwitterStrategy } from 'passport-twitter';
-
 import User from '../models/user';
+import tokenForUser from '../services/token';
 
-const twitterLogin = new TwitterStrategy(
-	{
-		consumerKey: process.env.CONSUMER_KEY,
-		consumerSecret: process.env.CONSUMER_SECRET,
-		callbackURL : 'http://127.0.0.1:3000/auth/twitter/callback'
-	},
-	(token, tokenSecret, profile, done) => {
-		User.findOrCreate(
+export const signInSuccess = (req, res) =>  {
+	if (req.user) {
+		const token = tokenForUser(req.user);
+		res.send({ token , user: req.user });
+	}
+	else {
+		res.json({ error: 'Insufficient permission' });
+	}
+};
+
+export const signOutUser = (req, res) => {
+	req.logout();
+	res.json({signedOut: true});
+};
+
+export const fetchUser = (req, res) => {
+	const { userId } = req.params;
+
+	User
+		.findById(userId)
+		.populate(
 			{
-				twitterId: profile.Id
-			},
-			{
-				username: profile.displayName,
-				twitterId: profile.id,
-				twitterScreenName: `@${profile._json.screen_name}`,
-				twitterProfileImg: profile._json.profile_image_url
+				path: 'pins',
+				options: { sort: { addedOn: -1 }},
+				populate: { path: 'addedBy' },
 			}
 		)
-			.then(user => done(null, user.result))
-			.catch(err => done(err));
-	}
-);
+		.populate(
+			{
+				path: 'pins',
+				options: { sort: { addedOn: -1 }},
+				populate: { path: 'likedBy' },
+			}
+		)
+		.then(user => res.send(user))
+		.catch(
+			err => {
+				console.log(err);
+				res.json({ error: 'User could not be retrieved' });
+			}
+		);
+};
 
 
-passport.use(twitterLogin);
-
-passport.serializeUser((user, done) => done(null, user._id));
-
-passport.deserializeUser((id, done) => {
-	User.findById(id)
-		.then(user => {
-			// console.log(user);
-			done(null, user);
-		})
-		.catch(err => done(err));
-		
-});
