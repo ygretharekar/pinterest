@@ -23,10 +23,10 @@ export default app => {
 		saveUninitialized: true
 	}));
 
-	routes(app);
-
+	
 	app.use(passport.initialize());
 	app.use(passport.session());
 	app.use(fallback(__dirname + '../build/index.html'));
-
+	
+	routes(app);
 };

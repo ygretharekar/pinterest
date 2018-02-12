@@ -1,12 +1,19 @@
 import passport from 'passport';
 
-import userController from '../controllers/user_controller';
-import pinController from '../controllers/pin_controller';
+import { signInSuccess, signOutUser, fetchUser } from '../controllers/user_controller';
+/* import { 
+	fetchPinsAll, 
+	fetchPinsSignedInUser, 
+	addPin,
+	deletePin,
+	likePin,
+	unlikePin
+} from '../controllers/pin_controller'; */
 
 import '../services/passport';
 import '../services/token';
 
-const requireAuth = passport.authenticate('jwt', {session: false});
+// const requireAuth = passport.authenticate('jwt', {session: false});
 
 export default (app) => {
 	app.get('/auth/twitter', passport.authenticate('twitter'));	
@@ -15,16 +22,13 @@ export default (app) => {
 		failureRedirect: '/'
 	}));
 
-
-	app.get('/user/signinsuccess', userController.signInSuccess);
-	app.get('/user/signout', userController.signOutUser);
-	app.get('/user/:userId', userController.fetchUser);
-
-	app.get('/pins/all', pinController.fetchPinsAll);
-	app.get('/pins/signedinuser', requireAuth, pinController.fetchPinsSignedInUser);
-	app.post('/pins/add/', requireAuth, pinController.addPin);
-	app.delete('/pins/delete/:pinId', requireAuth, pinController.deletePin);
-	app.put('/pins/like/:pinId', requireAuth, pinController.likePin);
-	app.put('/pins/unlike/:pinId', requireAuth, pinController.unlikePin);
+	app.get('/user/signinsuccess', signInSuccess);
+	app.get('/user/signout', signOutUser);
+	app.get('/user/:userId', fetchUser);
+	// app.get('/pins/all', fetchPinsAll);
+	// app.get('/pins/signedinuser', requireAuth, fetchPinsSignedInUser);
+	// app.post('/pins/add/', requireAuth, addPin);
+	// app.delete('/pins/delete/:pinId', requireAuth, deletePin);
+	// app.put('/pins/like/:pinId', requireAuth, likePin);
+	// app.put('/pins/unlike/:pinId', requireAuth, unlikePin);
 };
-

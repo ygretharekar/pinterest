@@ -7,6 +7,13 @@
 		{
 			"type": "chrome",
 			"request": "launch",
+			"name": "Chrome Mocha test",
+			"url": "http://localhost:5000",
+			"webRoot": "${workspaceFolder}/server/test"
+		},
+		{
+			"type": "chrome",
+			"request": "launch",
 			"name": "Chrome Server",
 			"url": "http://localhost:8100",
 			"webRoot": "${workspaceFolder}/build"

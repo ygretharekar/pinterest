@@ -1,22 +1,22 @@
-import express from 'express';
+// import express from 'express';
 
 import Pin from '../models/pin';
 import User from '../models/user';
 
 export const fetchAllPins = (req, res) => {
-  Pin
-	.find({})
-	.populate('addedBy')
-	.populate('likedBy')
-	.sort({addedOn: -1})
-	.then(pins => res.send(pins))
-	.catch(
-		err => {
-			console.error(err);
-			res.json({error: 'Pins could not be retrieved'});			
-		}
-	)
-}
+	Pin
+		.find({})
+		.populate('addedBy')
+		.populate('likedBy')
+		.sort({addedOn: -1})
+		.then(pins => res.send(pins))
+		.catch(
+			err => {
+				console.error(err);
+				res.json({error: 'Pins could not be retrieved'});			
+			}
+		);
+};
 
 export const fetchPinsOfUser = (req, res) => {
 	const {user} = req;
@@ -33,7 +33,7 @@ export const fetchPinsOfUser = (req, res) => {
 				res.json({error: 'Pins could not be retrieved'});
 			}
 		);
-}
+};
 
 export const addPin = (req, res) =>  {
 	const { url, description } = req.body;
@@ -55,20 +55,20 @@ export const addPin = (req, res) =>  {
 						err => {
 							console.log(err);
 							res.json({ error: 'Pin could not be saved' });
-					}
-				);
+						}
+					);
 			}
 		)
 		.catch(
 			err => {
 				console.log(err);
-				res.json({ error: 'User could not be retrieved' })
+				res.json({ error: 'User could not be retrieved' });
 			}
 		);
 };
 
 export const deletePin = (req, res) =>  {
-	const { url, description } = req.body;
+	// const { url, description } = req.body;
 	const { user } = req;
 	const { pinId } = req.params;
 
@@ -90,7 +90,7 @@ export const deletePin = (req, res) =>  {
 							console.log(err);
 							res.json({ error: 'Pin could not be deleted' });
 						}
-					)
+					);
 			}
 		)
 		.catch(
@@ -102,7 +102,7 @@ export const deletePin = (req, res) =>  {
 };
 
 export const likePin = (req, res) => {
-	const { url, description } = req.body;
+	// const { url, description } = req.body;
 	const { user } = req;
 	const { pinId } = req.params;
 
@@ -113,7 +113,7 @@ export const likePin = (req, res) => {
 		.populate('addedBy')
 		.then(
 			pin => {
-				const { likedBy } = pin;
+				// const { likedBy } = pin;
 				const index = pin.likedBy.findIndex(
 					likedByUser => likedByUser._id.toString() === user._id.toString()
 				);
@@ -130,7 +130,7 @@ export const likePin = (req, res) => {
 							console.log(err);
 							res.json({ error: 'Pin could not be updated' });
 						}
-					)
+					);
 			}
 		)
 		.catch(
@@ -139,10 +139,10 @@ export const likePin = (req, res) => {
 				res.json({ error: 'Pin could not be retrieved' });
 			}
 		);
-}
+};
 
 export const unlikePin = (req, res) => {
-	const { url, description } = req.body;
+	// const { url, description } = req.body;
 	const { user } = req;
 	const { pinId } = req.params;
 
@@ -152,7 +152,7 @@ export const unlikePin = (req, res) => {
 		.populate('addedBy')
 		.then(
 			pin => {
-				const { likedBy } = pin;
+				// const { likedBy } = pin;
 				const index = pin.likedBy.findIndex(
 					likedByUser => likedByUser._id.toString() === user._id.toString()
 				);
@@ -168,7 +168,7 @@ export const unlikePin = (req, res) => {
 							console.log(err);
 							res.json({ error: 'Pin could not be updated' });
 						}
-					)
+					);
 			}
 		)
 		.catch(
@@ -177,4 +177,4 @@ export const unlikePin = (req, res) => {
 				res.json({ error: 'Pin could not be retrieved' });
 			}
 		);
-}
+};

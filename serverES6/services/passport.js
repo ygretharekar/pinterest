@@ -1,10 +1,12 @@
 import passport from 'passport';
 import {Strategy as TwitterStrategy} from 'passport-twitter';
-import { Strategy as JwtStrategy } from 'passport-jwt';
-import { ExtractJwt } from 'passport-jwt';
-
-
+// import { Strategy as JwtStrategy } from 'passport-jwt';
+// import { ExtractJwt } from 'passport-jwt';
+import dotenv from 'dotenv';
 import User from '../models/user';
+
+dotenv.config();
+
 
 const twitterLogin = new TwitterStrategy({
 	consumerKey: process.env.CONSUMER_KEY,
@@ -23,7 +25,7 @@ const twitterLogin = new TwitterStrategy({
 		.catch(err => done(err));
 });
 
-const jwtLogin = new JwtStrategy(
+/* const jwtLogin = new JwtStrategy(
 	{
 		jwtFromRequest: ExtractJwt.fromAuthHeader(),
 		secretOrKey: process.env.SECRET
@@ -43,7 +45,7 @@ const jwtLogin = new JwtStrategy(
 	}
 );
 
-passport.use(jwtLogin);
+passport.use(jwtLogin); */
 passport.use(twitterLogin);
 
 passport.serializeUser((user, done) => done(null, user._id));

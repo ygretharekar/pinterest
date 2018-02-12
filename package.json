@@ -49,7 +49,10 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "dev:server": "nodemon serverES6/server.js --exec babel-node",
-    "build:server": "babel serverES6 --out-dir src/server",
-    "serve": "babel-node serverES6/server.js"
+    "build:server": "babel serverES6 --out-dir server",
+    "serve": "babel-node serverES6/server.js",
+    "testServer": "nodemon --exec mocha ./server -t 5000 --recursive'"
   }
+
+
 }
