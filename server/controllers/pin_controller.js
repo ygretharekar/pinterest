@@ -16,7 +16,6 @@ var _user2 = _interopRequireDefault(_user);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import express from 'express';
-
 const fetchAllPins = exports.fetchAllPins = (req, res) => {
 	_pin2.default.find({}).populate('addedBy').populate('likedBy').sort({ addedOn: -1 }).then(pins => res.send(pins)).catch(err => {
 		console.error(err);
@@ -25,6 +24,7 @@ const fetchAllPins = exports.fetchAllPins = (req, res) => {
 };
 
 const fetchPinsOfUser = exports.fetchPinsOfUser = (req, res) => {
+
 	const { user } = req;
 
 	_pin2.default.find({ addedBy: user }).populate('addedBy').populate('likedBy').sort({ addedOn: -1 }).then(pins => res.send(pins)).catch(err => {
@@ -34,11 +34,15 @@ const fetchPinsOfUser = exports.fetchPinsOfUser = (req, res) => {
 };
 
 const addPin = exports.addPin = (req, res) => {
+
 	const { url, description } = req.body;
 	const { user } = req;
 
-	_user2.default.findById(user._id).then(user => {
+	console.log('====================================');
+	console.log('user: ', url, '  ', description);
+	console.log('====================================');
 
+	_user2.default.findById(user._id).then(user => {
 		const pin = new _pin2.default({ url, description, addedBy: user });
 		user.pins.push(pin);
 
@@ -47,7 +51,7 @@ const addPin = exports.addPin = (req, res) => {
 			res.json({ error: 'Pin could not be saved' });
 		});
 	}).catch(err => {
-		console.log(err);
+		console.log({ id: user._id, err: err.response });
 		res.json({ error: 'User could not be retrieved' });
 	});
 };

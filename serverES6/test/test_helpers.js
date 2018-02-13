@@ -24,7 +24,7 @@ before(
 					done();
 				}
 			);
-	}	
+	}
 );
 
 beforeEach(
@@ -39,8 +39,6 @@ beforeEach(
 				]
 			)
 			.then(() => done())
-			.catch(() => done());		
+			.catch(() => done());
 	}
-	
 );
-

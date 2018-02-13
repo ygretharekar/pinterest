@@ -39,12 +39,33 @@ var _routes2 = _interopRequireDefault(_routes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();
+// import mongoose from 'mongoose';
 
 exports.default = app => {
 	app.use(_express2.default.static('build'));
 	app.use(_bodyParser2.default.json());
 	app.use(_bodyParser2.default.urlencoded({ extended: true }));
 	app.use(_express2.default.static(_path2.default.join(__dirname, '../build')));
+
+	// mongoose.connect(process.env.MONGODB_TEST_URI);
+
+	// mongoose
+	// 	.connection
+	// 	.once(
+	// 		'open', 
+	// 		() => {
+	// 			console.log('====================================');
+	// 			console.log('test database connection established');
+	// 			console.log('====================================');
+	// 		}
+	// 	)
+	// 	.on(
+	// 		'error',
+	// 		err => {
+	// 			console.error(err);
+	// 		}
+	// 	);
+
 
 	app.use((0, _expressSession2.default)({
 		cookie: { path: '/', httpOnly: true, maxAge: 36000000 },

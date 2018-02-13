@@ -23,7 +23,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "sinon": "^4.3.0"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -51,8 +52,6 @@
     "dev:server": "nodemon serverES6/server.js --exec babel-node",
     "build:server": "babel serverES6 --out-dir server",
     "serve": "babel-node serverES6/server.js",
-    "testServer": "nodemon --exec mocha ./server -t 5000 --recursive'"
+    "testServer": "nodemon --exec mocha ./server -t 5000 --recursive"
   }
-
-
 }

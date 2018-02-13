@@ -1,10 +1,10 @@
 'use strict';
 
-var _user = require('../models/user');
+var _user = require('../../models/user');
 
 var _user2 = _interopRequireDefault(_user);
 
-var _pin = require('../models/pin');
+var _pin = require('../../models/pin');
 
 var _pin2 = _interopRequireDefault(_pin);
 
@@ -14,11 +14,24 @@ var _supertestAsPromised2 = _interopRequireDefault(_supertestAsPromised);
 
 var _chai = require('chai');
 
-var _token = require('../services/token');
+var _token = require('../../services/token');
 
 var _token2 = _interopRequireDefault(_token);
 
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _middlewares = require('../../config/middlewares');
+
+var _middlewares2 = _interopRequireDefault(_middlewares);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const app = (0, _express2.default)(); /* eslint-disable */
+
+
+(0, _middlewares2.default)(app);
 
 describe('userController', () => {
 	let userOne;
@@ -29,9 +42,6 @@ describe('userController', () => {
 	let pinTwo;
 
 	beforeEach(done => {
-		console.log('====================================');
-		console.log('mocha mocha mocha');
-		console.log('====================================');
 		userOne = new _user2.default({
 			username: 'usernameOne',
 			twitterId: 'twitterIdOne',
@@ -123,4 +133,4 @@ describe('userController', () => {
 			}).catch(err => done(err));
 		});
 	});
-}); /* eslint-disable */
+});

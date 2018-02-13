@@ -1,7 +1,7 @@
 import passport from 'passport';
 import {Strategy as TwitterStrategy} from 'passport-twitter';
-// import { Strategy as JwtStrategy } from 'passport-jwt';
-// import { ExtractJwt } from 'passport-jwt';
+import { Strategy as JwtStrategy } from 'passport-jwt';
+import { ExtractJwt } from 'passport-jwt';
 import dotenv from 'dotenv';
 import User from '../models/user';
 
@@ -25,9 +25,9 @@ const twitterLogin = new TwitterStrategy({
 		.catch(err => done(err));
 });
 
-/* const jwtLogin = new JwtStrategy(
+const jwtLogin = new JwtStrategy(
 	{
-		jwtFromRequest: ExtractJwt.fromAuthHeader(),
+		jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 		secretOrKey: process.env.SECRET
 	},
 
@@ -45,7 +45,7 @@ const twitterLogin = new TwitterStrategy({
 	}
 );
 
-passport.use(jwtLogin); */
+passport.use(jwtLogin); 
 passport.use(twitterLogin);
 
 passport.serializeUser((user, done) => done(null, user._id));

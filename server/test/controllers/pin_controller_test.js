@@ -1,10 +1,10 @@
 'use strict';
 
-var _user = require('../models/user');
+var _user = require('../../models/user');
 
 var _user2 = _interopRequireDefault(_user);
 
-var _pin = require('../models/pin');
+var _pin = require('../../models/pin');
 
 var _pin2 = _interopRequireDefault(_pin);
 
@@ -14,11 +14,28 @@ var _supertestAsPromised2 = _interopRequireDefault(_supertestAsPromised);
 
 var _chai = require('chai');
 
-var _token = require('../services/token');
+var _token = require('../../services/token');
 
 var _token2 = _interopRequireDefault(_token);
 
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _middlewares = require('../../config/middlewares');
+
+var _middlewares2 = _interopRequireDefault(_middlewares);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const app = (0, _express2.default)();
+
+// import sinon from 'sinon';
+
+/* eslint-disable */
+
+
+(0, _middlewares2.default)(app);
 
 describe('pinController', () => {
 	let userOne;
@@ -67,8 +84,9 @@ describe('pinController', () => {
 
 	describe('.fetchPinsAll', () => {
 		it('fetches list  of all pins', done => {
+
 			(0, _supertestAsPromised2.default)(app).get('/pins/all').then(res => {
-				(0, _chai.expect)(res.body).to.be.an.Array;
+				(0, _chai.expect)(res.body).to.be.an('array');
 				(0, _chai.expect)(res.body.length).to.equal(2);
 				(0, _chai.expect)(res.body[0]).to.have.property('url');
 				(0, _chai.expect)(res.body[0]).to.have.property('description');
@@ -112,6 +130,7 @@ describe('pinController', () => {
 		});
 
 		it('saves a pin', done => {
+			// let spy = sinon.spy(console, 'log');
 			(0, _supertestAsPromised2.default)(app).post('/pins/add').set('authorization', userOneToken).send({
 				url: 'http://pinThree.png',
 				description: 'pinThree'
@@ -302,4 +321,4 @@ describe('pinController', () => {
 			}).catch(err => done(err));
 		});
 	});
-}); /* eslint-disable */
+});

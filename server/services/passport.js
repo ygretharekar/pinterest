@@ -6,6 +6,8 @@ var _passport2 = _interopRequireDefault(_passport);
 
 var _passportTwitter = require('passport-twitter');
 
+var _passportJwt = require('passport-jwt');
+
 var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
@@ -16,8 +18,6 @@ var _user2 = _interopRequireDefault(_user);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import { Strategy as JwtStrategy } from 'passport-jwt';
-// import { ExtractJwt } from 'passport-jwt';
 _dotenv2.default.config();
 
 const twitterLogin = new _passportTwitter.Strategy({
@@ -35,27 +35,16 @@ const twitterLogin = new _passportTwitter.Strategy({
 	}).then(user => done(null, user.result)).catch(err => done(err));
 });
 
-/* const jwtLogin = new JwtStrategy(
-	{
-		jwtFromRequest: ExtractJwt.fromAuthHeader(),
-		secretOrKey: process.env.SECRET
-	},
+const jwtLogin = new _passportJwt.Strategy({
+	jwtFromRequest: _passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
+	secretOrKey: process.env.SECRET
+}, (jwt_payload, done) => {
+	_user2.default.findById(jwt_payload.sub).then(user => {
+		if (user) done(null, user);else done(null, false);
+	}).catch(err => done(err, false));
+});
 
-	(jwt_payload, done) => {
-		User.findById(
-			jwt_payload.sub
-		)
-			.then(
-				user => {
-					if(user) done(null, user);
-					else done(null, false);
-				}
-			)
-			.catch(err => done(err, false));
-	}
-);
-
-passport.use(jwtLogin); */
+_passport2.default.use(jwtLogin);
 _passport2.default.use(twitterLogin);
 
 _passport2.default.serializeUser((user, done) => done(null, user._id));

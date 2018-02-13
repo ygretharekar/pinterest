@@ -1,5 +1,4 @@
 // import express from 'express';
-
 import Pin from '../models/pin';
 import User from '../models/user';
 
@@ -19,6 +18,7 @@ export const fetchAllPins = (req, res) => {
 };
 
 export const fetchPinsOfUser = (req, res) => {
+	
 	const {user} = req;
 	
 	Pin
@@ -36,15 +36,18 @@ export const fetchPinsOfUser = (req, res) => {
 };
 
 export const addPin = (req, res) =>  {
+
 	const { url, description } = req.body;
 	const { user } = req;
 
+	console.log('====================================');
+	console.log('user: ', url, '  ', description);
+	console.log('====================================');
 
 	User
 		.findById(user._id)
 		.then(
 			user => {
-
 				const pin = new Pin({ url, description, addedBy: user });
 				user.pins.push(pin);
 
@@ -61,7 +64,7 @@ export const addPin = (req, res) =>  {
 		)
 		.catch(
 			err => {
-				console.log(err);
+				console.log({id: user._id, err: err.response});
 				res.json({ error: 'User could not be retrieved' });
 			}
 		);

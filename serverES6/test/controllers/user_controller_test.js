@@ -1,9 +1,15 @@
 /* eslint-disable */
-import User from '../models/user';
-import Pin from '../models/pin';
+import User from '../../models/user';
+import Pin from '../../models/pin';
 import request from 'supertest-as-promised';
 import { expect } from 'chai';
-import tokenForUser from '../services/token';
+import tokenForUser from '../../services/token';
+import express from 'express';
+import appConfig from '../../config/middlewares';
+
+const app = express();
+
+appConfig(app);
 
 describe(
 	'userController',
@@ -14,12 +20,10 @@ describe(
 		let userTwoToken;
 		let pinOne;
 		let pinTwo;
+		
 
 		beforeEach(
 			done => {
-				console.log('====================================');
-				console.log('mocha mocha mocha');
-				console.log('====================================');
 				userOne = new User({
 					username: 'usernameOne',
 					twitterId: 'twitterIdOne',
@@ -150,4 +154,5 @@ describe(
 			});
 		});
 	}	
+
 );

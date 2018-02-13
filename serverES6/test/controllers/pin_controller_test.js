@@ -1,10 +1,20 @@
 /* eslint-disable */
-import User from '../models/user';
-import Pin from '../models/pin';
+import User from '../../models/user';
+import Pin from '../../models/pin';
 import request from 'supertest-as-promised';
 import {expect} from 'chai';
-import tokenForUser from '../services/token';
 
+// import sinon from 'sinon';
+
+import tokenForUser from '../../services/token';
+import express from 'express';
+import appConfig from '../../config/middlewares';
+
+
+
+const app = express();
+
+appConfig(app);
 
 describe(
 	'pinController',
@@ -16,48 +26,48 @@ describe(
 		let pinOne;
 		let pinTwo;
 
-
 		beforeEach(
 			done => {
 				userOne = new User({
-						username: 'usernameOne',
-						twitterId: 'twitterIdOne',
-						twitterScreenName: 'twitterScreenNameOne',
-						twitterProfileImg: 'http://imgOne.png'
-					});
+					username: 'usernameOne',
+					twitterId: 'twitterIdOne',
+					twitterScreenName: 'twitterScreenNameOne',
+					twitterProfileImg: 'http://imgOne.png'
+				});
 
-					userTwo = new User({
-						username: 'usernameTwo',
-						twitterId: 'twitterIdTwo',
-						twitterScreenName: 'twitterScreenNameTwo',
-						twitterProfileImg: 'http://imgTwo.png'
-					});
+				userTwo = new User({
+					username: 'usernameTwo',
+					twitterId: 'twitterIdTwo',
+					twitterScreenName: 'twitterScreenNameTwo',
+					twitterProfileImg: 'http://imgTwo.png'
+				});
 
-					userOneToken = tokenForUser(userOne);
-					userTwoToken = tokenForUser(userTwo);
+				userOneToken = tokenForUser(userOne);
+				userTwoToken = tokenForUser(userTwo);
 
-					pinOne = new Pin({
-						url: 'http://pinOne.png',
-						description: 'pinOne',
-						addedBy: userOne
-					});
+				pinOne = new Pin({
+					url: 'http://pinOne.png',
+					description: 'pinOne',
+					addedBy: userOne
+				});
 
-					pinTwo = new Pin({
-						url: 'http://pinTwo.png',
-						description: 'pinTwo',
-						addedBy: userTwo
-					});
+				pinTwo = new Pin({
+					url: 'http://pinTwo.png',
+					description: 'pinTwo',
+					addedBy: userTwo
+				});
 
-					userOne.pins = [pinOne];
-					userTwo.pins = [pinTwo];
-					pinOne.likedBy = [userTwo];
+				userOne.pins = [pinOne];
+				userTwo.pins = [pinTwo];
+				pinOne.likedBy = [userTwo];
 
-					Promise
-						.all([userOne.save(), userTwo.save(), pinOne.save(), pinTwo.save()])
-						.then(() => done())
-						.catch(err => done(err));
+				Promise
+					.all([userOne.save(), userTwo.save(), pinOne.save(), pinTwo.save()])
+					.then(() => done())
+					.catch(err => done(err));
 			}
 		);
+
 
 		describe(
 			'.fetchPinsAll',
@@ -65,18 +75,21 @@ describe(
 				it(
 					'fetches list  of all pins',
 					done => {
+
 						request(app)
 							.get('/pins/all')
-							.then(res => {
-							expect(res.body).to.be.an.Array;
-							expect(res.body.length).to.equal(2);
-							expect(res.body[0]).to.have.property('url');
-							expect(res.body[0]).to.have.property('description');
-							expect(res.body[0]).to.have.property('addedBy');
-							expect(res.body[0]).to.have.property('addedOn');
-							expect(res.body[0]).to.have.property('likedBy');
-							done();
-							})
+							.then(
+								res => {
+									expect(res.body).to.be.an('array');
+									expect(res.body.length).to.equal(2);
+									expect(res.body[0]).to.have.property('url');
+									expect(res.body[0]).to.have.property('description');
+									expect(res.body[0]).to.have.property('addedBy');
+									expect(res.body[0]).to.have.property('addedOn');
+									expect(res.body[0]).to.have.property('likedBy');
+									done();
+								}
+							)
 							.catch(err => done(err));
 					}
 				);
@@ -118,10 +131,12 @@ describe(
 					done => {
 						request(app)
 							.post('/pins/add')
-							.then(res => {
-							expect(res.text).to.equal('Unauthorized');
-							done();
-							})
+							.then(
+								res => {
+									expect(res.text).to.equal('Unauthorized');
+									done();
+								}
+							)
 							.catch(err => done(err));
 					}
 				);
@@ -132,10 +147,12 @@ describe(
 						request(app)
 							.post('/pins/add')
 							.set('authorization', userOneToken)
-							.then(res => {
-							expect(res.status).to.not.equal(404);
-							done();
-							})
+							.then(
+								res => {
+									expect(res.status).to.not.equal(404);
+									done();
+								}
+							)
 							.catch(err => done(err));
 					}
 				);
@@ -143,6 +160,7 @@ describe(
 				it(
 					'saves a pin', 
 					done => {
+						// let spy = sinon.spy(console, 'log');
 						request(app)
 							.post('/pins/add')
 							.set('authorization', userOneToken)
@@ -168,6 +186,7 @@ describe(
 							.catch(err => done(err));
 					}
 				);
+
 
 				it(
 					'adds a pin to a user\'s "pins" array', 
@@ -585,5 +604,4 @@ describe(
 			}
 		);
 	}
-
 );
