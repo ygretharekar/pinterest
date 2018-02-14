@@ -17,7 +17,6 @@ export const signOutUser = (req, res) => {
 	res.json({signedOut: true});
 };
 
-
 export const fetchUser = (req, res) => {
 	const { userId } = req.params;
 
@@ -45,5 +44,3 @@ export const fetchUser = (req, res) => {
 			}
 		);
 };
-
-

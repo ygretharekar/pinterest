@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
 import Component from './routes/routes';
-import configureStore from "./store/store";
+import configureStore from './store/store';
 
 import registerServiceWorker from './registerServiceWorker';
 

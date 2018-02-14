@@ -6,47 +6,47 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const styles = {
-  root: {
-    width: '100%'
-  },
-  flex: {
-    flex: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  }
+	root: {
+		width: '100%'
+	},
+	flex: {
+		flex: 1,
+	},
+	menuButton: {
+		marginLeft: -12,
+		marginRight: 20,
+	}
 };
 
 function SimpleAppBar(props) {
-  const { classes } = props;
+	const { classes } = props;
   
-  return (
- 	 <div className={classes.root}>
-      <AppBar position="static" color= 'primary'>
-        <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.flex}>
+	return (
+		<div className={classes.root}>
+			<AppBar position="static" color= 'primary'>
+				<Toolbar>
+					<Typography variant="title" color="inherit" className={classes.flex}>
             Pinterest Clone
-          </Typography>
-		      <Button
-            color="inherit"
-            href="/login"
-          >
+					</Typography>
+					<Button
+						color="inherit"
+						href="/auth/twitter"
+					>
             Twitter
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+					</Button>
+				</Toolbar>
+			</AppBar>
+		</div>
+	);
 }
 
 
 
 SimpleAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+	classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(SimpleAppBar);

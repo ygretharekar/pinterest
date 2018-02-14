@@ -36,7 +36,7 @@ const twitterLogin = new _passportTwitter.Strategy({
 });
 
 const jwtLogin = new _passportJwt.Strategy({
-	jwtFromRequest: _passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
+	jwtFromRequest: _passportJwt.ExtractJwt.fromHeader('authorization'),
 	secretOrKey: process.env.SECRET
 }, (jwt_payload, done) => {
 	_user2.default.findById(jwt_payload.sub).then(user => {

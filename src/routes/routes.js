@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import React, { Component } from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Appbar from '../containers/appbar';
 import LoginPage from '../containers/loginPage';
@@ -17,6 +17,6 @@ export default class Routes extends Component {
 					</div>
 				</Router>
 			</div>
-		)
+		);
 	}
 }

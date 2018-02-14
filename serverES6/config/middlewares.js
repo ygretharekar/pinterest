@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import fallback from 'express-history-api-fallback';
 import dotenv from 'dotenv';
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 import routes from './routes';
 
@@ -17,26 +17,24 @@ export default app => {
 	app.use(bodyParser.urlencoded({extended: true}));
 	app.use(express.static(path.join(__dirname, '../build')));
 	
-	// mongoose.connect(process.env.MONGODB_TEST_URI);
+	mongoose.connect(process.env.MONGODB_TEST_URI);
 
-	// mongoose
-	// 	.connection
-	// 	.once(
-	// 		'open', 
-	// 		() => {
-	// 			console.log('====================================');
-	// 			console.log('test database connection established');
-	// 			console.log('====================================');
-	// 		}
-	// 	)
-	// 	.on(
-	// 		'error',
-	// 		err => {
-	// 			console.error(err);
-	// 		}
-	// 	);
-
-	
+	mongoose
+		.connection
+		.once(
+			'open', 
+			() => {
+				console.log('====================================');
+				console.log('test database connection established');
+				console.log('====================================');
+			}
+		)
+		.on(
+			'error',
+			err => {
+				console.error(err);
+			}
+		);
 
 	app.use(
 		session(

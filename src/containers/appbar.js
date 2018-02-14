@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import AppBarComp from '../components/AppBarComp';
 
-const mapStateToProps = (state, ownProps) => ({
-  state   
+const mapStateToProps = (state) => ({
+	state   
 });
 
 const mapDispatchToProps = {

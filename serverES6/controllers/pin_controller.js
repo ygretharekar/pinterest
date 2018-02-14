@@ -40,10 +40,6 @@ export const addPin = (req, res) =>  {
 	const { url, description } = req.body;
 	const { user } = req;
 
-	console.log('====================================');
-	console.log('user: ', url, '  ', description);
-	console.log('====================================');
-
 	User
 		.findById(user._id)
 		.then(

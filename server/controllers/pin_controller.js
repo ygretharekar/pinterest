@@ -38,10 +38,6 @@ const addPin = exports.addPin = (req, res) => {
 	const { url, description } = req.body;
 	const { user } = req;
 
-	console.log('====================================');
-	console.log('user: ', url, '  ', description);
-	console.log('====================================');
-
 	_user2.default.findById(user._id).then(user => {
 		const pin = new _pin2.default({ url, description, addedBy: user });
 		user.pins.push(pin);

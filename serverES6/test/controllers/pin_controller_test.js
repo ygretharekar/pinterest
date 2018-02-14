@@ -553,7 +553,7 @@ describe(
 							.set('authorization', userOneToken)
 							.then(
 								res => {
-									expect(res.body).to.be.an.Array;
+									expect(res.body).to.be.an('array');
 									expect(res.body.length).to.equal(1);
 									expect(res.body[0]).to.have.property('url');
 									expect(res.body[0]).to.have.property('description');

@@ -291,7 +291,7 @@ describe('pinController', () => {
 
 		it('sends a list of a signed-in user\'s pins', done => {
 			(0, _supertestAsPromised2.default)(app).get('/pins/signedinuser').set('authorization', userOneToken).then(res => {
-				(0, _chai.expect)(res.body).to.be.an.Array;
+				(0, _chai.expect)(res.body).to.be.an('array');
 				(0, _chai.expect)(res.body.length).to.equal(1);
 				(0, _chai.expect)(res.body[0]).to.have.property('url');
 				(0, _chai.expect)(res.body[0]).to.have.property('description');
