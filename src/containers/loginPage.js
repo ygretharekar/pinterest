@@ -1,14 +1,34 @@
-import { connect } from 'react-redux';
-import LoginComp from '../components/loginComp';
-// import { actionCreator } from '../actionPath';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-const mapStateToProps = (state) => ({
-	state
-});
+import {signIn} from '../actionPath/index';
+
+export class TwitterLoginComp extends Component {
+
+	componentWillMount() {
+		this.props.signIn();
+		setTimeout(() => this.props.history.push('/'), 1200);
+	}
+	
+	render() {
+		return (
+			<div>
+				<h1>
+					twitter
+				</h1>
+				<h2>
+					{this.props.user}
+				</h2>
+			</div>
+		);
+	}
+
+}
+
+const mapStateToProps = (state) => ({user: state.user.userInfo});
 
 const mapDispatchToProps = {
-
-	
+	signIn
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginComp);
+export default connect(mapStateToProps, mapDispatchToProps)(TwitterLoginComp);

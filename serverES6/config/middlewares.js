@@ -6,17 +6,19 @@ import session from 'express-session';
 import fallback from 'express-history-api-fallback';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 import routes from './routes';
 
 dotenv.config();
 
 export default app => {
-	app.use(express.static('build'));
+	app.use(express.static(path.join(__dirname, '../../build')));
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({extended: true}));
-	app.use(express.static(path.join(__dirname, '../build')));
 	
+	app.use(cors());
+
 	mongoose.connect(process.env.MONGODB_TEST_URI);
 
 	mongoose
@@ -46,10 +48,11 @@ export default app => {
 			}
 		)
 	);
-
+	
 	app.use(passport.initialize());
 	app.use(passport.session());
-	app.use(fallback(__dirname + '../build/index.html'));
+
+	app.use(fallback(path.join(__dirname + './build/index.html')));
 	
 	routes(app);
 };

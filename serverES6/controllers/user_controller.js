@@ -1,7 +1,6 @@
 import User from '../models/user';
 import tokenForUser from '../services/token';
 
-
 export const signInSuccess = (req, res) =>  {
 	if (req.user) {
 		const token = tokenForUser(req.user);

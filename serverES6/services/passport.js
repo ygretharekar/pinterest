@@ -16,7 +16,7 @@ const twitterLogin = new TwitterStrategy(
 	(token, tokenSecret, profile, done) => {
 		User.findOrCreate(
 			{
-				twitterId: profile.Id
+				twitterId: profile.id
 			}, 
 			{
 				username: profile.displayName,
@@ -35,7 +35,6 @@ const jwtLogin = new JwtStrategy(
 		jwtFromRequest: ExtractJwt.fromHeader('authorization'),
 		secretOrKey: process.env.SECRET
 	},
-
 	(jwt_payload, done) => {
 		User
 			.findById(

@@ -4,10 +4,10 @@ import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+// import Button from 'material-ui/Button';
 
-// import { Link } from 'react-router-dom';
-
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
 
 const styles = {
 	root: {
@@ -23,9 +23,14 @@ const styles = {
 };
 
 function SimpleAppBar(props) {
-	const { classes } = props;
-  
 	
+	const { classes } = props;
+
+	const handleLogout = () => {
+		props.logout();
+	};
+
+
 	return (
 		<div className={classes.root}>
 			<AppBar position="static" color= 'primary'>
@@ -33,12 +38,12 @@ function SimpleAppBar(props) {
 					<Typography variant="title" color="inherit" className={classes.flex}>
 						Pinterest Clone
 					</Typography>
-					<Button
-						color="inherit"
-						href='/auth/twitter/'
-					>
-						Twitter
-					</Button>
+					<Chip
+						avatar={<Avatar src={ props.user.twitterProfileImg } />}
+						label={ props.user.twitterScreenName }
+						onDelete={handleLogout}
+						className={classes.chip}
+					/>
 				</Toolbar>
 			</AppBar>
 		</div>

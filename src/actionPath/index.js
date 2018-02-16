@@ -2,12 +2,63 @@ import axios from 'axios';
 
 const rootUrl = '';
 
-export const USER_INFO = 'USER_INFO';
 
-export const setUserInfo = payload => ({
-	type: USER_INFO,
-	payload
+//////////////////////////////////////////////////////////////
+
+export const AUTH_USER = 'AUTH_USER';
+
+export const authUser = () => ({
+	type: AUTH_USER
 });
+
+/////////////////////////////////////////////////////////////////////
+
+
+
+export const setUserInfo = 
+	() => 
+		dispatch => {
+			const user = JSON.parse(localStorage.getItem('user'));
+
+			if(user) dispatch({ type: 'SET_USER_INFO', payload: { userInfo: user } });
+		};
+
+
+export const resetUserInfo = () => ({type: 'RESET_USER_INFO'});
+
+export const signIn = 
+	() =>
+		dispatch => 
+			axios
+				.get('/user/signinsuccess')
+				.then(
+					res => {
+						if(!res.data.error){
+							localStorage.setItem('token', res.data.token);
+							localStorage.setItem('user', JSON.stringify(res.data.user));
+							dispatch(setUserInfo());
+							dispatch(authUser());							
+						}
+					}
+				)
+				.catch( err => console.error(err));
+
+
+export const signOut = 
+	() =>
+		dispatch => 
+			axios
+				.get('/user/signout')
+				.then(
+					() => {
+						localStorage.removeItem('token');
+						localStorage.removeItem('username');
+
+						dispatch({type: 'UNAUTH_USER'});
+						dispatch({type: 'RESET_USER_INFO'});
+					}
+				)
+				.catch( err => console.error(err) );
 
 ////////////////////// ERROR ///////////////////////////////
 
@@ -46,4 +97,3 @@ export const addPin =
 				)
 				.catch();
 		};
-

@@ -12,7 +12,6 @@ export default (state = authInitialState, action) => {
 			authError: ''
 		};
 
-		
 	case 'UNAUTH_USER':
 		return {
 			...state,
