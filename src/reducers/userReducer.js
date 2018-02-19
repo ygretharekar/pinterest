@@ -1,12 +1,10 @@
 const initialState = {
 	userInfo: null
-
 };
 
 export default (state = initialState, action) => {
 	
 	switch (action.type) {
-	
 	case 'SET_USER_INFO':
 		return { 
 			...state,
@@ -22,5 +20,4 @@ export default (state = initialState, action) => {
 	default:
 		return state;
 	}
-	
 };

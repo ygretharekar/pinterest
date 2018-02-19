@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn, signOut } from '../actionPath/index';
-
 import AppBarComp from '../components/AppBarComp';
 import LoggedinBar from '../components/TwitterLoginComp';
 
@@ -20,12 +19,14 @@ class AppBar extends Component {
 			<div>
 				{
 					this.props.authenticated ? 
-						<LoggedinBar 
-							logout={this.handleLogout.bind(this)}
-							user={ this.props.user }
-						/>:
+						<div>
+							<LoggedinBar 
+								logout={this.handleLogout.bind(this)}
+								user={ this.props.user }
+							/>
+						</div>
+						:
 						<AppBarComp />
-
 				}
 			</div>
 		);

@@ -1,21 +1,41 @@
 const initialState = {
-
+	addPinModal: false,
+	imageModal: false,
+	setImage: ''
 };
 
 export default (state = initialState, action) => {
-  switch (action.type) {
+	switch (action.type) {
 
-  case "SHOW_ADD_MODAL":
+	case 'SHOW_ADD_MODAL':
 		return { 
-			...state 
+			...state,
+			addPinModal: true
 		};
 
-  case 'CLOSE_ADD_MODAL':
+	case 'CLOSE_ADD_MODAL':
 		return {
-			...state
+			...state,
+			addPinModal: false
+		};
+	case 'SHOW_IMAGE_MODAL':
+		return { 
+			...state,
+			imageModal: true
 		};
 
-  default:
-		return state
-  }
+	case 'CLOSE_IMAGE_MODAL':
+		return {
+			...state,
+			imageModal: false
+		};
+	case 'SET_IMAGE_MODAL':
+		return {
+			...state,
+			...action.payload
+		};
+
+	default:
+		return state;
+	}
 };

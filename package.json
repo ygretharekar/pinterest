@@ -11,6 +11,7 @@
     "express-history-api-fallback": "^2.2.1",
     "express-session": "^1.15.6",
     "findorcreate-promise": "^1.2.0",
+    "is-url": "^1.2.2",
     "jwt-simple": "^0.5.1",
     "material-ui": "^1.0.0-beta.32",
     "material-ui-icons": "^1.0.0-beta.17",
@@ -24,8 +25,11 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.0",
     "redux": "^3.7.2",
+    "redux-form": "^7.2.3",
+    "redux-form-material-ui": "^4.3.3",
     "redux-thunk": "^2.2.0",
-    "sinon": "^4.3.0"
+    "sinon": "^4.3.0",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "babel": "^6.23.0",

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const rootUrl = '';
+// const rootUrl = '';
 
 
 //////////////////////////////////////////////////////////////
@@ -80,10 +80,13 @@ export const resetError = () => ({
 export const addPin = 
 	({ url, description }) =>
 		dispatch => {
+			console.log('====================================');
+			console.log('url: ', url, 'description: ', description);
+			console.log('====================================');
 			axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
 			axios
 				.post(
-					`${rootUrl}/pins/add`,
+					'/pins/add',
 					{
 						url,
 						description
@@ -91,9 +94,53 @@ export const addPin =
 				)
 				.then(
 					res => {
-						if(res.data.error) return dispatch(showError());
-						dispatch();
+						if (res.data.error) return dispatch(showError(res.data.error));
+
+						if(res.data.error) return dispatch(showError({message: res.data.error}));
+						dispatch({ type: 'ADD_PIN', payload: res.data});
+						dispatch(closeAddModal());
+						
 					}
 				)
-				.catch();
+				.catch(err => console.error(err.response.data));
 		};
+
+/////
+
+export const deletePin = 
+	pinId =>
+		dispatch => {
+			axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+
+			axios
+				.delete(`/pins/delete/${pinId}`)
+				.then( 
+					res => {
+						if (res.data.error) return dispatch(showError(res.data.error));
+						console.log(pinId);
+						dispatch({type: 'DELETE_PIN', payload: pinId});
+						dispatch(resetError());
+					}
+				)
+				.catch(err => console.error(err));
+		};	
+
+/////////
+
+
+
+//////////////////////////////////MODAL/////////////////////////////////////////////
+
+export const SHOW_ADD_MODAL = 'SHOW_ADD_MODAL';
+
+export const showAddModal = () => ({
+	type: SHOW_ADD_MODAL
+});
+
+
+export const CLOSE_ADD_MODAL = 'CLOSE_ADD_MODAL';
+
+export const closeAddModal = () => ({
+	type: CLOSE_ADD_MODAL
+});
+
