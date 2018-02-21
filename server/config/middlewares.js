@@ -32,6 +32,14 @@ var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
 
+var _mongoose = require('mongoose');
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _cors = require('cors');
+
+var _cors2 = _interopRequireDefault(_cors);
+
 var _routes = require('./routes');
 
 var _routes2 = _interopRequireDefault(_routes);
@@ -39,33 +47,23 @@ var _routes2 = _interopRequireDefault(_routes);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config();
-// import mongoose from 'mongoose';
 
 exports.default = app => {
-	app.use(_express2.default.static('build'));
+	app.use(_express2.default.static(_path2.default.join(__dirname, '../../build')));
 	app.use(_bodyParser2.default.json());
 	app.use(_bodyParser2.default.urlencoded({ extended: true }));
-	app.use(_express2.default.static(_path2.default.join(__dirname, '../build')));
 
-	// mongoose.connect(process.env.MONGODB_TEST_URI);
+	app.use((0, _cors2.default)());
 
-	// mongoose
-	// 	.connection
-	// 	.once(
-	// 		'open', 
-	// 		() => {
-	// 			console.log('====================================');
-	// 			console.log('test database connection established');
-	// 			console.log('====================================');
-	// 		}
-	// 	)
-	// 	.on(
-	// 		'error',
-	// 		err => {
-	// 			console.error(err);
-	// 		}
-	// 	);
+	_mongoose2.default.connect(process.env.MONGODB_TEST_URI);
 
+	_mongoose2.default.connection.once('open', () => {
+		console.log('====================================');
+		console.log('test database connection established');
+		console.log('====================================');
+	}).on('error', err => {
+		console.error(err);
+	});
 
 	app.use((0, _expressSession2.default)({
 		cookie: { path: '/', httpOnly: true, maxAge: 36000000 },
@@ -76,7 +74,8 @@ exports.default = app => {
 
 	app.use(_passport2.default.initialize());
 	app.use(_passport2.default.session());
-	app.use((0, _expressHistoryApiFallback2.default)(__dirname + '../build/index.html'));
+
+	app.use((0, _expressHistoryApiFallback2.default)(_path2.default.join(__dirname + './build/index.html')));
 
 	(0, _routes2.default)(app);
 };

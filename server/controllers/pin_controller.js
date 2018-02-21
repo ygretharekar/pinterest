@@ -86,11 +86,11 @@ const likePin = exports.likePin = (req, res) => {
 		pin.likedBy.push(user);
 
 		pin.save().then(savedPin => res.send(savedPin)).catch(err => {
-			console.log(err);
+			console.log('Error: ', err);
 			res.json({ error: 'Pin could not be updated' });
 		});
 	}).catch(err => {
-		console.log(err);
+		console.log('Error catch: ', err);
 		res.json({ error: 'Pin could not be retrieved' });
 	});
 };
@@ -108,11 +108,11 @@ const unlikePin = exports.unlikePin = (req, res) => {
 
 		pin.likedBy.splice(index, 1);
 		pin.save().then(savedPin => res.send(savedPin)).catch(err => {
-			console.log(err);
+			console.log('Error: ', err);
 			res.json({ error: 'Pin could not be updated' });
 		});
 	}).catch(err => {
-		console.log(err);
+		console.log('Error catch: ', err);
 		res.json({ error: 'Pin could not be retrieved' });
 	});
 };

@@ -18,14 +18,18 @@ require('../services/token');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import path from 'path';
+
 const requireAuth = _passport2.default.authenticate('jwt', { session: false });
 
 exports.default = app => {
 	app.get('/auth/twitter', _passport2.default.authenticate('twitter'));
 	app.get('/auth/twitter/callback', _passport2.default.authenticate('twitter', {
-		successRedirect: '/success',
-		failureRedirect: '/'
+		successRedirect: '/',
+		failureRedirect: '/failed'
 	}));
+
+	// app.get('/success', (req, res) => res.sendFile(path.join(__dirname, './successRedirect.js')));
 
 	app.get('/user/signinsuccess', _user_controller.signInSuccess);
 	app.get('/user/signout', _user_controller.signOutUser);

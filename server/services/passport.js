@@ -26,7 +26,7 @@ const twitterLogin = new _passportTwitter.Strategy({
 	callbackURL: 'http://127.0.0.1:8100/auth/twitter/callback'
 }, (token, tokenSecret, profile, done) => {
 	_user2.default.findOrCreate({
-		twitterId: profile.Id
+		twitterId: profile.id
 	}, {
 		username: profile.displayName,
 		twitterId: profile.id,

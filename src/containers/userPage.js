@@ -39,6 +39,7 @@ export class UserPage extends Component {
 		console.log(tile);
 		console.log('====================================');
 
+		
 		this.props.deletePin(tile._id);
 	}
 
