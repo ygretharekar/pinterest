@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import Appbar from '../containers/appbar';
+// import Appbar from '../containers/appbar';
 import AllPins from '../containers/allPins';
 import UserPage from '../containers/userPage';
 
@@ -11,7 +11,6 @@ export default class Routes extends Component {
 			<div>
 				<Router>
 					<div>
-						<Appbar />
 						<Switch>
 							<Route exact path="/" component={AllPins} />	
 							<Route exact path="/user" component={UserPage} />	

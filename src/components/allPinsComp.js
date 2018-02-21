@@ -7,9 +7,9 @@ import Subheader from 'material-ui/List/ListSubheader';
 import IconButton from 'material-ui/IconButton';
 // import Button from 'material-ui/Button';
 import InfoIcon from 'material-ui-icons/Info';
-// import tiles from '../test assets/tiledata';
 import { showImageModal, setImage } from '../actionPath/index';
 
+// import tiles from '../test assets/tiledata';
 import ImageZoom from './ImageZoom';
 
 const styles = theme => ({

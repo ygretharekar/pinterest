@@ -66,6 +66,4 @@ const mapDispatchToProps = {
 	fetchAllPins
 };
 
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(AppBar);

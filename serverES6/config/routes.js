@@ -24,6 +24,7 @@ export default (app) => {
 		failureRedirect: '/failed'
 	}));
 
+	
 	// app.get('/success', (req, res) => res.sendFile(path.join(__dirname, './successRedirect.js')));
 
 	app.get('/user/signinsuccess', signInSuccess);
