@@ -8,6 +8,9 @@ import Typography from 'material-ui/Typography';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 
+
+import {Redirect} from 'react-router-dom';
+
 const styles = {
 	root: {
 		width: '100%'
@@ -31,19 +34,25 @@ function SimpleAppBar(props) {
 
 	return (
 		<div className={classes.root}>
-			<AppBar position="static" color= 'primary'>
-				<Toolbar>
-					<Typography variant="title" color="inherit" className={classes.flex}>
-						Pinterest Clone
-					</Typography>
-					<Chip
-						avatar={<Avatar src={ props.user.twitterProfileImg } />}
-						label={ props.user.twitterScreenName }
-						onDelete={handleLogout}
-						className={classes.chip}
-					/>
-				</Toolbar>
-			</AppBar>
+			{
+				props.us ?
+					<Redirect to = '/user' />:
+					<AppBar position="static" color= 'primary'>
+						<Toolbar>
+							<Typography variant="title" color="inherit" className={classes.flex}>
+							Pinterest Clone
+							</Typography>
+							<Chip
+								avatar={<Avatar src={ props.user.twitterProfileImg } />}
+								label={ props.user.twitterScreenName }
+								onDelete={handleLogout}
+								className={classes.chip}
+								onClick={props.redirect}
+							/>
+
+						</Toolbar>
+					</AppBar>
+			}
 		</div>
 	);
 }

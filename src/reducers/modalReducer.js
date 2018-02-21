@@ -1,7 +1,7 @@
 const initialState = {
 	addPinModal: false,
 	imageModal: false,
-	setImage: ''
+	setImage: {}
 };
 
 export default (state = initialState, action) => {

@@ -127,7 +127,101 @@ export const deletePin =
 
 /////////
 
+export const fetchAllPins = 
+	() =>
+		dispatch => {
+			axios
+				.get('/pins/all')
+				.then(
+					res => {
+						if (res.data.error) return dispatch(showError(res.data.error));
 
+						dispatch({ type: 'FETCH_PINS_ALL', payload: {allPins: res.data} });
+						dispatch(resetError());
+					}
+				)
+				.catch(err => console.error(err));
+		};
+///////////////////////
+
+export const fetchLoggedInPin = 
+	() =>
+		dispatch => {
+
+			axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+			axios.get('/pins/signedinuser')
+				.then(
+					res => {
+						if (res.data.error) return dispatch(showError(res.data.error));
+
+						dispatch({type: 'FETCH_PINS_SIGNEDIN_USER', payload: {signedInPins: res.data}});
+						dispatch(resetError());
+					}
+				)
+				.catch(err => console.log(err));
+
+		};
+
+////////
+
+export const fetchPinsUser = 
+	userId => 
+		dispatch => {
+			axios.get(`/user/${userId}`)
+				.then(
+					res => {
+						if (res.data.error) return dispatch(showError(res.data.error));
+
+						dispatch({ type: 'FETCH_PINS_USER', payload: {pinsUser: res.data} });
+						dispatch(resetError());
+					}
+				)
+				.catch(err => console.log(err));
+		};
+
+////////////
+
+export const RESET_PINS_USER = 'RESET_PINS_USER';
+
+export const resetUserPins = () => ({
+	type: RESET_PINS_USER
+});
+
+////////////
+
+export const likePin = 
+	pinId => 
+		dispatch => {
+			axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+			axios.put(`/pins/like/${pinId}`)
+				.then(
+					res => {
+						if (res.data.error) return dispatch(showError(res.data.error));
+
+						dispatch({ type: 'LIKE_PIN', payload: res.data });
+						dispatch(resetError());
+					}
+				)
+				.catch(err => console.log(err));
+		};
+
+/////////////////
+
+export const unlikePin = 
+	pinId => 
+		dispatch => {
+			axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+			axios.put(`/pins/unlike/${pinId}`)
+				.then(res => {
+					if (res.data.error) return dispatch(showError(res.data.error));
+
+					dispatch({ type: 'UNLIKE_PIN', payload: res.data });
+					dispatch(resetError());
+				})
+				.catch(err => console.log(err));
+		};
+
+////////////////		
 
 //////////////////////////////////MODAL/////////////////////////////////////////////
 
@@ -142,5 +236,24 @@ export const CLOSE_ADD_MODAL = 'CLOSE_ADD_MODAL';
 
 export const closeAddModal = () => ({
 	type: CLOSE_ADD_MODAL
+});
+
+export const SHOW_IMAGE_MODAL = 'SHOW_IMAGE_MODAL';
+
+export const showImageModal = () => ({
+	type: SHOW_IMAGE_MODAL
+});
+
+export const CLOSE_IMAGE_MODAL = 'CLOSE_IMAGE_MODAL';
+
+export const closeImageModal = () => ({
+	type: CLOSE_IMAGE_MODAL
+});
+
+export const SET_IMAGE_MODAL = 'SET_IMAGE_MODAL';
+
+export const setImage = payload => ({
+	type: SET_IMAGE_MODAL,
+	payload
 });
 

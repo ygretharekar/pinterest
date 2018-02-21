@@ -126,7 +126,7 @@ export const likePin = (req, res) => {
 					.then(savedPin => res.send(savedPin))
 					.catch(
 						err => {
-							console.log(err);
+							console.log('Error: ', err);
 							res.json({ error: 'Pin could not be updated' });
 						}
 					);
@@ -134,7 +134,7 @@ export const likePin = (req, res) => {
 		)
 		.catch(
 			err => {
-				console.log(err);
+				console.log('Error catch: ',err);
 				res.json({ error: 'Pin could not be retrieved' });
 			}
 		);
@@ -164,7 +164,7 @@ export const unlikePin = (req, res) => {
 					.then(savedPin => res.send(savedPin))
 					.catch(
 						err => {
-							console.log(err);
+							console.log('Error: ',err);
 							res.json({ error: 'Pin could not be updated' });
 						}
 					);
@@ -172,7 +172,7 @@ export const unlikePin = (req, res) => {
 		)
 		.catch(
 			err => {
-				console.log(err);
+				console.log('Error catch: ',err);
 				res.json({ error: 'Pin could not be retrieved' });
 			}
 		);

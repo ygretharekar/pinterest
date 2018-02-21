@@ -7,9 +7,9 @@ import AddIcon from 'material-ui-icons/Add';
 const styles = theme => ({
 	button: {
 		margin: theme.spacing.unit,
-		position: 'relative',
-		top: '30rem',
-		float: 'right'
+		position: 'fixed',
+		top: '80%',
+		left: '85%'
 	}
 });
 
